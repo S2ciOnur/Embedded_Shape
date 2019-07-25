@@ -1,0 +1,25 @@
+// For every program variable z there is a unary predicate that holds for
+// list elements pointed by z.
+// The unique property is used to convey the fact that the predicate can hold
+// for at most one individual.
+// The pointer property is a visualization hint for graphical renderers.
+%s HVar{r1,r2,r3,c1,c2,c3}
+
+foreach (z in HVar) {
+  %p z(v_1) unique pointer
+}
+
+// The predicate n represents the rn field of the list data type.
+%p rn(v_1, v_2) function acyclic
+
+// The predicate n represents the cn field of the list data type.
+%p cn(v_1, v_2) function acyclic
+
+
+// The t[rn] predicate records transitive reflexive reachability between
+// list elements along the rn field.
+%i t[rn](v_1, v_2) = rn*(v_1, v_2) transitive reflexive
+
+// The t[cn] predicate records transitive reflexive reachability between
+// list elements along the cn field.
+%i t[cn](v_1, v_2) = cn*(v_1, v_2) transitive reflexive

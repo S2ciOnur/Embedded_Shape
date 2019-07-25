@@ -1,0 +1,20 @@
+// vars
+%s PVar {x,O,gameOver}
+
+#include "predicates.tvp"
+%%
+
+#include "actions.tvp"
+
+%%
+
+// Ablauf robo
+
+L1 Set_Game_over_false(gameOver)
+L2 Is_Game_Over(x, O)	exit // while (!game_over) {
+L3 Their_Turn(O) 		L4	// their turn
+L4 My_Turn(x)			L2	// my turn
+
+exit Assert_Lose  error // Todo Verloren
+exit Assert_I_Win error	// Todo Gewonnen
+exit Assert_Draw  error	// Todo Unentschieden

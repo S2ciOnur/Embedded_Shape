@@ -1,0 +1,23 @@
+//////////////////
+// Core Predicates
+
+
+// describes if field is set to x or O
+marked(v) {
+
+ // x(v) v O(v)
+}
+
+// eventuell vereinheitlichen
+marked_X(v) {
+ 
+ // x(v)
+}
+
+marked_O(v) {
+ 
+ // O(v)
+}
+
+ 
+
