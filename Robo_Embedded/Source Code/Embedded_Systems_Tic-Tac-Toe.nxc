@@ -165,7 +165,7 @@ int find_symbol()
 /*-----------------------------------------------------------------------------
           Erkennung, dass gegenspieler am Zeichnen ist // weiterer Spielverlauf
 -----------------------------------------------------------------------------*/
-void ultra2()
+void ultrasensor()
 {
   int temp=0,i=0;
   SetSensorLowspeed(IN_2);
@@ -216,27 +216,6 @@ task draw_x1()
   RotateMotor(OUT_B,20,53); //x-axis
 }
 
-
-/*-----------------------------------------------------------------------------
-                              Zeichne O
------------------------------------------------------------------------------*/
-void draw_o()
-{
- pen_down(); //Stilos - ON
- RotateMotor(OUT_B,20,53); //x-axis
- pen_up();
- pen_down();
- RotateMotor(OUT_C,100,300); //y-axis
- pen_up();
- pen_down();
- RotateMotor(OUT_B,20,-53); //x-axis
- pen_up();
- pen_down();
- RotateMotor(OUT_C,100,-300); //y-axis
- pen_up(); //Stilos - OFF
-}
-
-
 /*-----------------------------------------------------------------------------
                     Zeichne X in der entsprechenden Zelle
 -----------------------------------------------------------------------------*/
@@ -251,22 +230,6 @@ void draw_x_square(int x)
  start draw_x1;
  Wait(6000);
 }
-
-
-/*-----------------------------------------------------------------------------
-                    Zeichne O in der entsprechenden Zelle
------------------------------------------------------------------------------*/
-void draw_o_square(int x)
-{
- move_pen(cell_x[x] + 20, cell_y[x] - 176);
- Acquire(moveMutex_x);
- Acquire(moveMutex_y);
- Release(moveMutex_x);
- Release(moveMutex_y);
-
- draw_o();
-}
-
 
 /*-----------------------------------------------------------------------------
                         Zeichne das Spielfeld
@@ -926,8 +889,6 @@ task main()
  //Feld zeichnen
  draw_board();
 
- //play if you want
-
  ClearScreen();
  TextOut(0,LCD_LINE1,"I play:");
  NumOut(300,LCD_LINE1,symbol);
@@ -987,8 +948,6 @@ for(turns=0;turns<turns_num;turns++)
  nodes[1].active = 1;
 
  ClearScreen();
- //aktueller Baum auf LCD
-
 
  x_lcd = 23;
  y_lcd = 47;
@@ -1171,8 +1130,7 @@ for(turns=0;turns<turns_num;turns++)
     if(first_op == 0)
     {
                 //Ton abspielen
-                PlayFileEx("play.rso",7,FALSE);
-                ultra2();
+                ultrasensor();
                 Wait(5000);
     }
     else
@@ -1209,23 +1167,19 @@ current_x = current_x + 1;
    Release(moveMutex_x);
    Release(moveMutex_y);
 
-  //Siege und spiele Sound
+  //Siege
   if(win == false)
   {
     ClearScreen();
     TextOut(0,LCD_LINE1,"Tie");
-    PlayFileEx("Tie.rso",7,FALSE);
   }
   else
   {
     ClearScreen();
     TextOut(0,LCD_LINE1,"Win");
-    PlayFileEx("Win.rso",7,FALSE);
   }
 
    Wait(10000);
    move_pen(0,-3683);
-
-
 }
 
