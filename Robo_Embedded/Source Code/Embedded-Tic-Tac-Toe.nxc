@@ -1,3 +1,4 @@
+
 #define NEAR 25 //cm
 
 //koordinaten der Zellen
@@ -337,6 +338,20 @@ int heuristic(int id)
        data[2] == symbol && data[4] == symbol && data[6] == symbol
        )
        total = total + 1000;
+
+
+	//Sieg des Gegners
+    if(
+       data[0] == op_symbol && data[1] == op_symbol && data[2] == op_symbol ||
+       data[3] == op_symbol && data[4] == op_symbol && data[5] == op_symbol ||
+       data[6] == op_symbol && data[7] == op_symbol && data[8] == op_symbol ||
+       data[0] == op_symbol && data[3] == op_symbol && data[6] == op_symbol ||
+       data[1] == op_symbol && data[4] == op_symbol && data[7] == op_symbol ||
+       data[2] == op_symbol && data[5] == op_symbol && data[8] == op_symbol ||
+       data[0] == op_symbol && data[4] == op_symbol && data[8] == op_symbol ||
+       data[2] == op_symbol && data[4] == op_symbol && data[6] == op_symbol
+       )
+       total = total - 1000;
 
 
     //me 2 sumvola
