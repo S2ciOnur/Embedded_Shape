@@ -23,3 +23,8 @@ foreach (z in HVar) {
 // The t[cn] predicate records transitive reflexive reachability between
 // list elements along the cn field.
 %i t[cn](v_1, v_2) = cn*(v_1, v_2) transitive reflexive
+
+// predicates
+%p marked(v) unique
+%p marked_X(v) unique
+%p marked_O(v) unique
