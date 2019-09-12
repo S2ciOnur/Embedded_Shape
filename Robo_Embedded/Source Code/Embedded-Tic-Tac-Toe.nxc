@@ -887,7 +887,6 @@ task main()
 
  int i=0,j=0,k=0,p_data[9],temp_data[9],c_node=0,turns_num=9;
  int child_num=0,child_total=0,tree_nodes=0,symbol_turn=0,op_move=0,turns=9;
- int x_lcd=0,y_lcd=0;
 
  ClearScreen();
  TextOut(0,LCD_LINE1,"Minimax");
@@ -954,13 +953,6 @@ for(turns=0;turns<turns_num;turns++)
  nodes[1].active = 1;
 
  ClearScreen();
- //aktueller Baum auf LCD
- //draw_tree(0,47,game);
- LineOut(19,64,19,44);
- LineOut(0,44,19,44);
-
- x_lcd = 23;
- y_lcd = 47;
 
  moves_left=0;
 
@@ -1065,17 +1057,7 @@ for(turns=0;turns<turns_num;turns++)
                                                                       layer_2_tree[layer_2_nodes] = i;
                                                                       layer_2_nodes++;
 
-                                                                      if(layer_2_nodes==5)
-                                                                      {
-                                                                        x_lcd = 0;
-                                                                        y_lcd = 15;
-                                                                      }
-
-                                                                      //draw_tree(x_lcd,y_lcd,data);
-                                                                      x_lcd = x_lcd + 20;
-
-
-                         }
+                                                                                             }
                          else if(nodes[c_node+child_num+child_total].layer == 3)
                          {
                                                                       layer_3[layer_3_nodes] = c_node+child_num+child_total;
