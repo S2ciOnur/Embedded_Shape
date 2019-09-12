@@ -7,7 +7,7 @@ int cell_y[] = {2049,2049,2049,1366,1366,1366,683,683,683};
 //Initiales Spielfeld
 int game[] = {0,0,0,0,0,0,0,0,0};
 
-int current_x=0,current_y=-3683,white=0,btn=0,symbol=1,op_symbol=2,cell=0;
+int current_x=0,current_y=-3683,white=0,symbol=1,op_symbol=2,cell=0;
 int data[9],child_array[10],first_op = 0,trick=1,max=0,min=0,move=0;
 int layer_1=0,layer_2[10],layer_3[73],layer_2_tree[10];
 int layer_1_nodes=0,layer_2_nodes=0,layer_3_nodes=0,layer_4_nodes=0;
@@ -937,22 +937,6 @@ int win_and_trick()
 			best_cell = 2;
 	}
 
-  if(btn == 2)
-  {
-	//klein
-  if(moves_left == 7)
-    {
-	   if(game[4] == symbol && game[0] == op_symbol)
-	   best_cell = 8;
-	   else if(game[4] == symbol && game[2] == op_symbol)
-	   best_cell = 6;
-	   else if(game[4] == symbol && game[6] == op_symbol)
-	   best_cell = 2;
-	   else if(game[4] == symbol && game[8] == op_symbol)
-	   best_cell = 0;
-    }
-  }
-
   return best_cell;
 }
 
@@ -966,27 +950,6 @@ task main()
  int i=0,j=0,k=0,p_data[9],temp_data[9],c_node=0,turns_num=9;
  int child_num=0,child_total=0,tree_nodes=0,symbol_turn=0,op_move=0,turns=9;
  int x_lcd=0,y_lcd=0;
-
- TextOut(0,LCD_LINE1,"Choose algorithm:");
- TextOut(0,LCD_LINE2,"Left->Minimax");
- TextOut(0,LCD_LINE3,"Right->Minimax++");
-
- //Auswahl des Algorithmus
- while(btn == 0)
- {
-   if(ButtonPressed(BTNLEFT,false))
-   {
-     ClearScreen();
-     TextOut(0,LCD_LINE1,"Minimax");
-     btn=1;
-   }
-   else if(ButtonPressed(BTNRIGHT,false))
-   {
-     ClearScreen();
-     TextOut(0,LCD_LINE1,"Minimax++");
-     btn=2;
-   }
- }
 
  //Feld zeichnen
  draw_board();
