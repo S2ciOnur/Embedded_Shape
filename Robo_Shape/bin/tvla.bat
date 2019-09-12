@@ -2,8 +2,8 @@
 
 SET PROG=%1
 
-SET TVLA_HOME="C:\Users\%USERNAME%\Documents\tvla-3.0alpha"
-SET TVLA_JAR="C:\Users\%USERNAME%\Documents\tvla-3.0alpha\lib\tvla.jar%"
+SET TVLA_HOME="C:\Users\%USERNAME%\OneDrive\Dokumente\Embedded_Shape\Robo_Shape"
+SET TVLA_JAR="C:\Users\%USERNAME%\OneDrive\Dokumente\Embedded_Shape\Robo_Shape\lib\tvla.jar%"
 
 REM This allows for an unlimited number of command-line arguments
 SET ARGS=
