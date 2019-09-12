@@ -1,10 +1,10 @@
 #define NEAR 25 //cm
 
-//Suntetagmenes keliwn
+//Koordinaten der Zellen
 int cell_x[] = {0,93,186,0,93,186,0,93,186};
 int cell_y[] = {2049,2049,2049,1366,1366,1366,683,683,683};
 
-//Trexon board
+//Initiales Spielfeld
 int game[] = {0,0,0,0,0,0,0,0,0};
 
 int current_x=0,current_y=-3683,white=0,btn=0,symbol=1,op_symbol=2,cell=0;
@@ -17,7 +17,7 @@ bool found_symbol=false,scan=false,win = false;
 
 mutex moveMutex_x,moveMutex_y;
 
-//Domi komvwn dentrou
+//Knotenstruktur des Baums
 struct node
 {
         int id;
@@ -31,12 +31,12 @@ struct node
         int active;
 };
 
-//megistos arithmos = 401
+//maximale Knotenanzahl = 401
 node nodes[401];
 
 
 /*-----------------------------------------------------------------------------
-                          Katevasma stulou
+                          Stift absetzen
 -----------------------------------------------------------------------------*/
 void pen_down()
 {
@@ -47,7 +47,7 @@ void pen_down()
 
 
 /*-----------------------------------------------------------------------------
-                          Anevasma stulou
+                          Stift anheben
 -----------------------------------------------------------------------------*/
 void pen_up()
 {
@@ -56,7 +56,7 @@ void pen_up()
 
 
 /*-----------------------------------------------------------------------------
-                         Metakinisi oximatos
+                         Bewegung des Fahrzeugs
 -----------------------------------------------------------------------------*/
 
 
@@ -89,7 +89,7 @@ void move_pen(int x, int y)
 
 
 /*-----------------------------------------------------------------------------
-                         Ais8itiras Fwteinotitas
+                         Lichtsensor
 -----------------------------------------------------------------------------*/
 int light()
 {
@@ -109,7 +109,7 @@ int light()
 
 
 /*-----------------------------------------------------------------------------
-                         Elenxos sumvolou
+                         Prüfung auf Symbol
 -----------------------------------------------------------------------------*/
 void check_cell(int x, int y)
 {
@@ -134,7 +134,7 @@ void check_cell(int x, int y)
 }
 
 /*-----------------------------------------------------------------------------
-                     Euresi kinisis antipalou
+                     Gegnerisches Symbol finden
 -----------------------------------------------------------------------------*/
 int find_symbol()
 {
@@ -163,7 +163,7 @@ int find_symbol()
 }
 
 /*-----------------------------------------------------------------------------
-                     Anixneusi grapsimatos antipalou
+          Erkennung, dass gegenspieler am Zeichnen ist // 1. Zug
 -----------------------------------------------------------------------------*/
 int ultra1()
 {
@@ -191,7 +191,7 @@ int ultra1()
 
 
 /*-----------------------------------------------------------------------------
-                     Anixneusi grapsimatos antipalou
+          Erkennung, dass gegenspieler am Zeichnen ist // weiterer Spielverlauf
 -----------------------------------------------------------------------------*/
 void ultra2()
 {
@@ -212,7 +212,7 @@ void ultra2()
 
 
 /*-----------------------------------------------------------------------------
-                              Sxediasmos X
+                              Zeichne X
 -----------------------------------------------------------------------------*/
 task draw_x4()
 {
@@ -246,7 +246,7 @@ task draw_x1()
 
 
 /*-----------------------------------------------------------------------------
-                              Sxediasmos O
+                              Zeichne O
 -----------------------------------------------------------------------------*/
 void draw_o()
 {
@@ -266,7 +266,7 @@ void draw_o()
 
 
 /*-----------------------------------------------------------------------------
-                    Sxediasmos X sto katallilo keli
+                    Zeichne X in der entsprechenden Zelle
 -----------------------------------------------------------------------------*/
 void draw_x_square(int x)
 {
@@ -282,7 +282,7 @@ void draw_x_square(int x)
 
 
 /*-----------------------------------------------------------------------------
-                    Sxediasmos O sto katallilo keli
+                    Zeichne O in der entsprechenden Zelle
 -----------------------------------------------------------------------------*/
 void draw_o_square(int x)
 {
@@ -297,7 +297,7 @@ void draw_o_square(int x)
 
 
 /*-----------------------------------------------------------------------------
-                        Sxediasmos trilizas
+                        Zeichne das Spielfeld
 -----------------------------------------------------------------------------*/
 void draw_board()
 {
@@ -307,14 +307,14 @@ void draw_board()
  Release(moveMutex_x);
  Release(moveMutex_y);
 
- pen_down(); //Stilos - ON
+ pen_down(); //Stift - absetzen
  move_pen(279,683);
  Acquire(moveMutex_x);
  Acquire(moveMutex_y);
  Release(moveMutex_x);
  Release(moveMutex_y);
 
- pen_up(); //Stilos - OFF
+ pen_up(); //Stift - anheben
 
  move_pen(279,1366);
  Acquire(moveMutex_x);
@@ -322,14 +322,14 @@ void draw_board()
  Release(moveMutex_x);
  Release(moveMutex_y);
 
- pen_down(); //Stilos - ON
+ pen_down(); //Stift - absetzen
  move_pen(0,1366);
  Acquire(moveMutex_x);
  Acquire(moveMutex_y);
  Release(moveMutex_x);
  Release(moveMutex_y);
 
- pen_up(); //Stilos - OFF
+ pen_up(); //Stift - anheben
 
  move_pen(93,2049);
  Acquire(moveMutex_x);
@@ -337,14 +337,14 @@ void draw_board()
  Release(moveMutex_x);
  Release(moveMutex_y);
 
- pen_down(); //Stilos - ON
+ pen_down(); //Stift - absetzen
  move_pen(93,0);
  Acquire(moveMutex_x);
  Acquire(moveMutex_y);
  Release(moveMutex_x);
  Release(moveMutex_y);
 
- pen_up(); //Stilos - OFF
+ pen_up(); //Stift - anheben
 
  move_pen(186,0);
  Acquire(moveMutex_x);
@@ -352,14 +352,14 @@ void draw_board()
  Release(moveMutex_x);
  Release(moveMutex_y);
 
- pen_down(); //Stilos - ON
+ pen_down(); //Stift - absetzen
  move_pen(186,2049);
  Acquire(moveMutex_x);
  Acquire(moveMutex_y);
  Release(moveMutex_x);
  Release(moveMutex_y);
 
- pen_up(); //Stilos - OFF
+ pen_up(); //Stift - anheben
 
  move_pen(0,-3683);
  Acquire(moveMutex_x);
@@ -370,7 +370,7 @@ void draw_board()
 
 
 /*-----------------------------------------------------------------------------
-                 Sxediasmos dentrwn stin o8oni LCD
+                 Gestaltung der Baueme auf dem LCD-Display
 -----------------------------------------------------------------------------*/
 void draw_x_lcd(int x,int y)
 {
@@ -477,7 +477,7 @@ void draw_tree(int DX,int DY,int game[])
 
 
 /*-----------------------------------------------------------------------------
-                    Episimansi trexousas kinisis stin LCD
+                    Markiere aktuellen Spielstand auf dem LCD
 -----------------------------------------------------------------------------*/
 void highlight_tree()
 {
