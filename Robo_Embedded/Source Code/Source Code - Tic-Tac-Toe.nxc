@@ -41,12 +41,7 @@ node nodes[401];
 void pen_down()
 {
      OnFwd(OUT_A, 15);
-task "name"()
-{
-  "body"
-}
-
-
+     Wait(250);
      Float(OUT_A);
 }
 
@@ -1593,6 +1588,4 @@ current_x = current_x + 1;
 
 
 }
-
-
 
