@@ -525,7 +525,7 @@ void highlight_tree()
 }
 
 /*-----------------------------------------------------------------------------
-                  Simeiwsi kaluteris stratigikis stin LCD
+					Anzeigen des besten Zuges auf LCD
 -----------------------------------------------------------------------------*/
 void draw_number(int pos,int value)
 {
@@ -611,7 +611,7 @@ void draw_number(int pos,int value)
 }
 
 /*-----------------------------------------------------------------------------
-                    Simeiwsi kaluteris stratigikis stin LCD
+                    Anzeigen des besten Zuges auf LCD
 -----------------------------------------------------------------------------*/
 void draw_heuristic()
 {
@@ -642,7 +642,7 @@ void draw_heuristic()
 
 
 /*-----------------------------------------------------------------------------
-                        Euretiki Sunartisi
+                        Heuristische Funktion
 -----------------------------------------------------------------------------*/
 int heuristic(int id)
 {
@@ -659,7 +659,7 @@ int heuristic(int id)
     data[7] = nodes[id].data7;
     data[8] = nodes[id].data8;
 
-	//niki
+	//Sieg
     if(
        data[0] == symbol && data[1] == symbol && data[2] == symbol ||
        data[3] == symbol && data[4] == symbol && data[5] == symbol ||
@@ -673,7 +673,7 @@ int heuristic(int id)
        total = total + 1000;
 
 
-	//niki antipalou
+	//Sieg des Gegners
     if(
        data[0] == op_symbol && data[1] == op_symbol && data[2] == op_symbol ||
        data[3] == op_symbol && data[4] == op_symbol && data[5] == op_symbol ||
@@ -729,7 +729,7 @@ int heuristic(int id)
        )
        total = total + 100;
 
-    //diagwnioi
+    //Diagonale
     if(
        data[0] == symbol && data[4] == symbol && data[8] == 0 ||
        data[0] == symbol && data[8] == symbol && data[4] == 0 ||
@@ -783,7 +783,7 @@ int heuristic(int id)
        data[5] == op_symbol && data[8] == op_symbol && data[2] == 0
        )
        total = total - 100;
-    //diagwnioi
+    //Diagonale
     if(
        data[0] == op_symbol && data[4] == op_symbol && data[8] == 0 ||
        data[0] == op_symbol && data[8] == op_symbol && data[4] == 0 ||
@@ -837,7 +837,7 @@ int heuristic(int id)
        data[5] == symbol && data[8] == 0 && data[2] == 0
        )
        total = total + 10;
-    //diagwnioi
+    //Diagonale
     if(
        data[0] == symbol && data[4] == 0 && data[8] == 0 ||
        data[0] == 0 && data[8] == symbol && data[4] == 0 ||
@@ -891,7 +891,7 @@ int heuristic(int id)
        data[5] == op_symbol && data[8] == 0 && data[2] == 0
        )
        total = total - 10;
-    //diagwnioi
+    //diagonale
     if(
        data[0] == op_symbol && data[4] == 0 && data[8] == 0 ||
        data[0] == 0 && data[8] == op_symbol && data[4] == 0 ||
@@ -905,7 +905,7 @@ int heuristic(int id)
        )
        total = total - 10;
 
-	  //kenes
+	  //leer
     if(
        data[0] == 0 && data[1] == 0 && data[2] == 0 ||
        data[3] == 0 && data[4] == 0 && data[5] == 0 ||
@@ -923,7 +923,7 @@ int heuristic(int id)
 
 
 /*-----------------------------------------------------------------------------
-               Euresi veltistis kinisis (algorithmos Minimax)
+               Finden des besten Zugs (Minmax)
 -----------------------------------------------------------------------------*/
 int best_move()
 {
@@ -1065,7 +1065,7 @@ int best_move()
 
 
 /*-----------------------------------------------------------------------------
-                        Niki + kolpaki
+                        Sieg + ...
 -----------------------------------------------------------------------------*/
 int win_and_trick()
 {
@@ -1126,7 +1126,7 @@ int win_and_trick()
   else if(data[5] == symbol && data[8] == symbol && data[2] == 0)
 		best_cell = 2;
 
-    //diagwnioi
+    //Diagonal
   else if(data[0] == symbol && data[4] == symbol && data[8] == 0)
 		best_cell = 8;
   else if(data[0] == symbol && data[8] == symbol && data[4] == 0)
@@ -1192,7 +1192,7 @@ int win_and_trick()
 		else if(data[5] == op_symbol && data[8] == op_symbol && data[2] == 0)
 			best_cell = 2;
 
-		//diagwnioi
+		//Diagonal
 		else if(data[0] == op_symbol && data[4] == op_symbol && data[8] == 0)
 			best_cell = 8;
 		else if(data[0] == op_symbol && data[8] == op_symbol && data[4] == 0)
@@ -1210,7 +1210,7 @@ int win_and_trick()
 
   if(btn == 2)
   {
-	//kolpaki
+	//klein
   if(moves_left == 7)
     {
 	   if(game[4] == symbol && game[0] == op_symbol)
@@ -1242,7 +1242,7 @@ task main()
  TextOut(0,LCD_LINE2,"Left->Minimax");
  TextOut(0,LCD_LINE3,"Right->Minimax++");
 
- //epilogi algorithmou
+ //Auswahl des Algorithmus
  while(btn == 0)
  {
    if(ButtonPressed(BTNLEFT,false))
@@ -1259,10 +1259,10 @@ task main()
    }
  }
 
- //sxediasmos trilizas
+ //Feld zeichnen
  draw_board();
 
- //pai3e an 8es prwtos (anixneusi)
+ //play if you want
  symbol = ultra1();
 
  ClearScreen();
@@ -1272,7 +1272,7 @@ task main()
 
  symbol_turn = 1;
 
- //sumvolo robot
+ //Robotersymbol
  if(symbol == 1)
  {
       op_symbol = 2;
@@ -1290,7 +1290,7 @@ task main()
 	    op_symbol = 1;
 
 
-//gia ka8e guro
+//für jede Runde
 for(turns=0;turns<turns_num;turns++)
 {
  if(win == false)
@@ -1309,7 +1309,7 @@ for(turns=0;turns<turns_num;turns++)
  {
 	 symbol_turn = op_symbol;
 
- //tree creation
+ //Baum erstellen
  nodes[1].id = 1;
  nodes[1].parent = 1;
 
@@ -1329,7 +1329,7 @@ for(turns=0;turns<turns_num;turns++)
  nodes[1].active = 1;
 
  ClearScreen();
- //current tree lcd
+ //aktueller Baum auf LCD
  draw_tree(0,47,game);
  LineOut(19,64,19,44);
  LineOut(0,44,19,44);
@@ -1357,7 +1357,7 @@ for(turns=0;turns<turns_num;turns++)
  {
   trick = 0;
 
-  //genitria katastasewn
+  //Zustandsgenerator
   for(c_node=1;c_node<tree_nodes;c_node++)
   {
     child_num = 0;
@@ -1487,7 +1487,7 @@ for(turns=0;turns<turns_num;turns++)
     child_total = child_total + child_num-1;
   }
 
-  //euresi veltistis kinisis (algorithmos Minimax)
+  //Finden des optimalen Zugs (Minmax)
   best_cell = best_move();
   }
 
@@ -1501,14 +1501,14 @@ for(turns=0;turns<turns_num;turns++)
       cell = k;
   }
 
-  //sxediasmos stin lcd ta dentra
+  //Design des Baums
   draw_heuristic();
 
-  //episimansi trexousas kinisis
+  //kennzeichnen
   if(trick == 0)
   highlight_tree();
 
-  //sxediasmos sumvolou
+  //Symbol-Design
   if(symbol == 1)
             draw_x_square(best_cell);
   else if(symbol == 2)
@@ -1527,10 +1527,10 @@ for(turns=0;turns<turns_num;turns++)
     ClearScreen();
     TextOut(0,LCD_LINE1,"Make your move.");
 
-    //waiting player
+    //warten auf Spieler
     if(first_op == 0)
     {
-                //ixitiki eidopoihsh pai3imatos
+                //Ton abspielen
                 PlayFileEx("play.rso",7,FALSE);
                 ultra2();
                 Wait(5000);
@@ -1543,7 +1543,7 @@ for(turns=0;turns<turns_num;turns++)
     ClearScreen();
     TextOut(0,LCD_LINE1,"Searching symbol...");
 
-    //euresi kinisis antipalou
+    //Zug des Gegners finden
     op_move = find_symbol();
 
     TextOut(0,LCD_LINE2,"Symbol square:");
@@ -1569,7 +1569,7 @@ current_x = current_x + 1;
    Release(moveMutex_x);
    Release(moveMutex_y);
 
-  //ixitika minimata nikis kai isopalias
+  //Siege und spiele Sound
   if(win == false)
   {
     ClearScreen();
