@@ -163,34 +163,6 @@ int find_symbol()
 }
 
 /*-----------------------------------------------------------------------------
-          Erkennung, dass gegenspieler am Zeichnen ist // 1. Zug
------------------------------------------------------------------------------*/
-int ultra1()
-{
-  int i=0,temp=0;
-  SetSensorLowspeed(IN_2);
-  ClearScreen();
-  TextOut(0,LCD_LINE1,"Play if you want");
-
-  for(i=0;i<5;i++)
-  {
-                  temp = SensorUS(IN_2);
-  }
-
-  for(i=0;i<50;i++)
-  {
-                   if(SensorUS(IN_2) < NEAR)
-                   {
-                                    first_op = 1;
-                                    return 2;
-                   }
-                   Wait(100);
-  }
-  return 1;
-}
-
-
-/*-----------------------------------------------------------------------------
           Erkennung, dass gegenspieler am Zeichnen ist // weiterer Spielverlauf
 -----------------------------------------------------------------------------*/
 void ultra2()
@@ -955,7 +927,6 @@ task main()
  draw_board();
 
  //play if you want
- symbol = ultra1();
 
  ClearScreen();
  TextOut(0,LCD_LINE1,"I play:");
@@ -965,8 +936,6 @@ task main()
  symbol_turn = 1;
 
  //Robotersymbol
- if(symbol == 1)
- {
       op_symbol = 2;
       draw_x_square(4);
       game[4] = 1;
@@ -977,9 +946,6 @@ task main()
       Acquire(moveMutex_y);
       Release(moveMutex_x);
       Release(moveMutex_y);
- }
- else
-	    op_symbol = 1;
 
 
 //für jede Runde
@@ -1185,10 +1151,8 @@ for(turns=0;turns<turns_num;turns++)
   }
 
   //Symbol-Design
-  if(symbol == 1)
-            draw_x_square(best_cell);
-  else if(symbol == 2)
-       draw_o_square(best_cell);
+   draw_x_square(best_cell);
+
 
   move_pen(15,-3683);
   Acquire(moveMutex_x);
