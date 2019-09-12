@@ -1221,10 +1221,6 @@ for(turns=0;turns<turns_num;turns++)
       cell = k;
   }
 
-  //kennzeichnen
-  if(trick == 0)
-  highlight_tree();
-
   //Symbol-Design
   if(symbol == 1)
             draw_x_square(best_cell);
