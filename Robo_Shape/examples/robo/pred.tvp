@@ -26,5 +26,6 @@ foreach (z in HVar) {
 
 // predicates
 %p marked(v) unique
+// x oder o wie???
 %p marked_X(v) unique
 %p marked_O(v) unique

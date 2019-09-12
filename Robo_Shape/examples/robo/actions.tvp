@@ -29,41 +29,18 @@
 }
 
 %action Game_Is_Not_Over() { 
-  %t "play"
-  
-  %f {
-  !(
-   //alle felder markiert
-	 (marked(f11) & marked(f12) & marked(f13))
-	 | (marked(f21) & marked(f22) & marked(f23))
-	 | (marked(f31) & marked(f32) & marked(f33))
-	// rows
-	 | (marked_X(f11) & marked_X(f12) & marked_X(f13)) 
-	 | (marked_X(f21) & marked_X(f22) & marked_X(f23))
-	 | (marked_X(f31) & marked_X(f32) & marked_X(f33))
-	 | (marked_O(f11) & marked_O(f12) & marked_O(f13)) 
-	 | (marked_O(f21) & marked_O(f22) & marked_O(f23))
-	 | (marked_O(f31) & marked_O(f32) & marked_O(f33))
-	// columns
-	 | (marked_X(f11) & marked_X(f21) & marked_X(f31)) 
-	 | (marked_X(f12) & marked_X(f22) & marked_X(f13))
-	 | (marked_X(f13) & marked_X(f23) & marked_X(f33))
-	 | (marked_O(f11) & marked_O(f21) & marked_O(f31)) 
-	 | (marked_O(f12) & marked_O(f22) & marked_O(f13))
-	 | (marked_O(f13) & marked_O(f23) & marked_O(f33))
-	// diagonale
-	 | (marked_X(f11) & marked_X(f22) & marked_X(f33)) 
-	 | (marked_O(f11) & marked_O(f22) & marked_O(f33)) 
-	 | (marked_X(f13) & marked_X(f22) & marked_X(f31)) 
-	 | (marked_O(f13) & marked_O(f22) & marked_O(f31)) 
-  
-  )
+  %t "play" 
+
+  %f { }
+  {
+	
   }
 }
 %action Their_Turn() { 
 	//warte
-	// lese felder
   %t "their turn"
+  %f {
+  }
 }
 
 %action My_Turn() { 

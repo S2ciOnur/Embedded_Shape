@@ -21,6 +21,6 @@ GOTO EXIT
 
 :CREATE_POSTSCRIPT
 ECHO Converting output to PostScript...
-"C:\Program Files (x86)\Graphviz2.3.8\bin\dot" -Tps -o%PROG%.ps < %PROG%.dt
+"C:\Program Files (x86)\Graphviz2.38\bin\dot" -Tps -o%PROG%.ps < %PROG%.dt
 
 :EXIT
