@@ -6,6 +6,7 @@
 %s HVar{r1,r2,r3,c1,c2,c3}
 %s rows{r1,r2,r3}
 %s columns{c1,c2,c3}
+
 // Menge von Markierungen
 %s marks{marked_O, marked_X}
 foreach (z in HVar) {
@@ -34,10 +35,7 @@ foreach (z in HVar) {
 // predicates
 %i marked(v) = marked_X(v) | marked_O(v)
 
-// Gehe durch alle Rows
-// gehe durch alle markierten in rows
-// Wenn alle 3 v = true dann win_marked_row = true
-// r(v1,v2) zum springen von f11 -> f12 benötigt
+// check someone one with rows
 foreach (r in rows) {
 	foreach(x in marks) {
 	%i win_marked_row[r,x]() = E(v1,v2,v3) r(v1) & x(v1) & rn(v1,v2) & x(v2) & rn(v2,v3) & x(v3)
@@ -46,12 +44,8 @@ foreach (r in rows) {
 %i win_marked_row() = 
 	win_marked_row[r1,marked_X]() | win_marked_row[r2,marked_X]() | win_marked_row[r3,marked_X]()
 	| win_marked_row[r1,marked_O]() | win_marked_row[r2,marked_O]() | win_marked_row[r3,marked_O]()
-	
-	
-// Gehe durch alle Columns
-// gehe durch alle markierten in columns
-// Wenn alle 3 v = true dann win_marked_columns = true
-// c(v1,v2) zum springen von f11 -> f21 benötigt
+
+// check someone one with columns	
 foreach (c in columns) {
 	foreach(x in marks) {
 	%i win_marked_column[c,x]() = E(v1,v2,v3) c(v1) & x(v1) & cn(v1,v2) & x(v2) & cn(v2,v3) & x(v3)
@@ -60,3 +54,28 @@ foreach (c in columns) {
 %i win_marked_column() = 
 	win_marked_column[c1,marked_X]() | win_marked_column[c2,marked_X]() | win_marked_column[c3,marked_X]()
 	| win_marked_column[c1,marked_O]() | win_marked_column[c2,marked_O]() | win_marked_column[c3,marked_O]()
+	
+/*
+Diagonale f11, f22, f33
+x(f11) & f21-> f22 & x(f22) & f31 -> f32 ->f33 & x(f33)
+*/
+
+foreach(x in marks) {
+	%i win_marked_diagonale[r1,r2,r3,x]() = 
+		E(v1,v2,v3,v4,v5,v6) 
+		r1(v1) & x(v1) 
+		& r2(v2) & rn(v2,v3) & x(v3) 
+		& r3(v4) & rn(v4,v5) & rn(v5,v6) & x(v6)
+}
+// diagonale f13, f22, f31
+foreach(x in marks) {
+	%i win_marked_diagonale[r3,r2,r1,x]() = 
+		E(v1,v2,v3,v4,v5,v6) 
+		r1(v1) & x(v1) 
+		& r2(v2) & rn(v2,v3) & x(v3) 
+		& r3(v4) & rn(v4,v5) & rn(v5,v6) & x(v6)
+}
+
+%i win_marked_diagonale() = 
+	win_marked_diagonale[r1,r2,r3, marked_X]() | win_marked_diagonale[r3,r2,r1, marked_O]() |
+	win_marked_diagonale[r1,r2,r3, marked_O]() | win_marked_diagonale[r3,r2,r1, marked_O]()
