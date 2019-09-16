@@ -12,7 +12,7 @@
 %action Their_Turn() { 
 	//warte
   %t "their turn"
- // %p A(v) !marked(v) = 1/2 // alle Felder die nicht markiert sind bekommen 1/2
+  %p E(v) !marked(v) -> 1/2 // alle Felder die nicht markiert sind bekommen 1/2
   
 }
 
