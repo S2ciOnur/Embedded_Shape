@@ -7,7 +7,7 @@
 
 %action Game_Is_Not_Over() { 
   %t "play" 
-  %p E(v) !marked(v) & !win_marked_row() & !win_marked_column()
+  %p E(v) !marked(v) & !win_marked_row() & !win_marked_column() & !win_marked_diagonale()
 }
 %action Their_Turn() { 
 	//warte
