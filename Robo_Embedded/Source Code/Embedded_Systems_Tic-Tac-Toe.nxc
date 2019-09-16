@@ -7,7 +7,7 @@ int cell_y[] = {2049,2049,2049,1366,1366,1366,683,683,683};
 //Initiales Spielfeld
 int game[] = {0,0,0,0,0,0,0,0,0};
 
-int current_x=0,;
+int current_x=0;
 int current_y=-3683;
 int white=0;
 int symbol=1;
