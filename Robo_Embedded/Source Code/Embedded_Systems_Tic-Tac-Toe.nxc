@@ -7,13 +7,38 @@ int cell_y[] = {2049,2049,2049,1366,1366,1366,683,683,683};
 //Initiales Spielfeld
 int game[] = {0,0,0,0,0,0,0,0,0};
 
-int current_x=0, current_y=-3683, white=0, symbol=1, op_symbol=2, cell=0;
-int data[9], child_array[10], first_op=0, trick=1, max=0, min=0, move=0;
-int layer_1=0, layer_2[10], layer_3[73], layer_2_tree[10];
-int layer_1_nodes=0, layer_2_nodes=0, layer_3_nodes=0, layer_4_nodes=0;
-int best_cell=0, moves_left=0, lcd=0, id=0, child=0, move_x, move_y;
+int current_x=0,;
+int current_y=-3683;
+int white=0;
+int symbol=1;
+int op_symbol=2;
+int cell=0;
+int data[9];
+int child_array[10];
+int first_op=0;
+int trick=1;
+int max=0;
+int min=0;
+int move=0;
+int layer_1=0;
+int layer_2[10];
+int layer_3[73];
+int layer_2_tree[10];
+int layer_1_nodes=0;
+int layer_2_nodes=0;
+int layer_3_nodes=0;
+int layer_4_nodes=0;
+int best_cell=0;
+int moves_left=0;
+int lcd=0;
+int id=0;
+int child=0;
+int move_x;
+int move_y;
 
-bool found_symbol=false, scan=false, win=false;
+bool found_symbol=false;
+bool scan=false;
+bool win=false;
 
 mutex moveMutex_x, moveMutex_y;
 
@@ -854,9 +879,6 @@ task main(){
     int i=0, j=0, k=0, p_data[9], temp_data[9], c_node=0, turns_num=9;
     int child_num=0, child_total=0, tree_nodes=0, symbol_turn=0, op_move=0, turns=9;
 
-    //TODO was machen diese Variablen
-    //int x_lcd=0, y_lcd=0;
-
     // Feld zeichnen
     draw_board();
 
@@ -915,12 +937,6 @@ task main(){
                 nodes[1].layer = 1;
                 nodes[1].symbol = op_symbol;
                 nodes[1].active = 1;
-
-                ClearScreen();
-
-                // TODO Bedeutung?
-                //x_lcd = 23;
-                //y_lcd = 47;
 
                 moves_left=0;
 
@@ -1087,10 +1103,6 @@ task main(){
                 ClearScreen();
                 TextOut(0,LCD_LINE1,"Searching symbol...");
                 op_move = find_symbol();
-
-                //TODO: fuer was sind die beiden Zeilen
-                //TextOut(0,LCD_LINE2,"Symbol square:");
-                //NumOut(600,LCD_LINE2,op_move);
 
                 for(i=0; i<9; i++){
                     if(op_move == i)
