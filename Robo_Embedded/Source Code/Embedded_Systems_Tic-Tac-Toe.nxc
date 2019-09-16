@@ -1089,8 +1089,8 @@ task main(){
                 op_move = find_symbol();
 
                 //TODO: fuer was sind die beiden Zeilen
-                TextOut(0,LCD_LINE2,"Symbol square:");
-                NumOut(600,LCD_LINE2,op_move);
+                //TextOut(0,LCD_LINE2,"Symbol square:");
+                //NumOut(600,LCD_LINE2,op_move);
 
                 for(i=0; i<9; i++){
                     if(op_move == i)
