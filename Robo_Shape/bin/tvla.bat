@@ -14,7 +14,7 @@ SHIFT
 GOTO SETUP_ARGS
 :DONE_ARGS
 
-java -Dtvla.home="%TVLA_HOME%" -mx800m -jar %TVLA_HOME%\lib\tvla.jar %ARGS% -dot %PROG%.dt
+java -Dtvla.home="%TVLA_HOME%" -mx2046m -jar %TVLA_HOME%\lib\tvla.jar %ARGS% -dot %PROG%.dt
 
 IF EXIST %PROG%.dt GOTO CREATE_POSTSCRIPT
 GOTO EXIT
@@ -22,5 +22,8 @@ GOTO EXIT
 :CREATE_POSTSCRIPT
 ECHO Converting output to PostScript...
 "C:\Program Files (x86)\Graphviz2.38\bin\dot" -Tps -o%PROG%.ps < %PROG%.dt
+
+ECHO Converting PS to PDF...
+ps2pdf main.tvp.ps main.pdf
 
 :EXIT
