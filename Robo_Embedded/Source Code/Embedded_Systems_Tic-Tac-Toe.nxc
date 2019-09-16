@@ -855,7 +855,7 @@ task main(){
     int child_num=0, child_total=0, tree_nodes=0, symbol_turn=0, op_move=0, turns=9;
 
     //TODO was machen diese Variablen
-    int x_lcd=0, y_lcd=0;
+    //int x_lcd=0, y_lcd=0;
 
     // Feld zeichnen
     draw_board();
@@ -919,8 +919,8 @@ task main(){
                 ClearScreen();
 
                 // TODO Bedeutung?
-                x_lcd = 23;
-                y_lcd = 47;
+                //x_lcd = 23;
+                //y_lcd = 47;
 
                 moves_left=0;
 
