@@ -35,7 +35,7 @@ foreach (z in HVar) {
 // predicates
 %i marked(v) = marked_X(v) | marked_O(v)
 
-// check someone with rows
+// check someone won with rows
 foreach (r in rows) {
 	foreach(x in marks) {
 	%i win_marked_row[r,x]() = E(v1,v2,v3) r(v1) & x(v1) & rn(v1,v2) & x(v2) & rn(v2,v3) & x(v3)
@@ -45,7 +45,7 @@ foreach (r in rows) {
 	win_marked_row[r1,marked_X]() | win_marked_row[r2,marked_X]() | win_marked_row[r3,marked_X]()
 	| win_marked_row[r1,marked_O]() | win_marked_row[r2,marked_O]() | win_marked_row[r3,marked_O]()
 
-// check someone with columns	
+// check someone won with columns	
 foreach (c in columns) {
 	foreach(x in marks) {
 	%i win_marked_column[c,x]() = E(v1,v2,v3) c(v1) & x(v1) & cn(v1,v2) & x(v2) & cn(v2,v3) & x(v3)
@@ -82,3 +82,7 @@ foreach(x in marks) {
 %i win_marked_diagonale() = 
 	win_marked_diagonale[r1,r2,r3, marked_X]() | win_marked_diagonale[r3,r2,r1, marked_X]() |
 	win_marked_diagonale[r1,r2,r3, marked_O]() | win_marked_diagonale[r3,r2,r1, marked_O]()
+	
+// test
+
+%i check_marked() = E(v1) r1(v1) & marked_O(v1)

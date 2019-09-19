@@ -1,22 +1,22 @@
 %action Game_Is_Over() { 
-  %t "game over"
+	%t "game over"
 	// Alle Felder markiert v alle Reihen markiert v alle Zeilen markiert oder Diagonale
-
-	%p A(v) marked(v) | win_marked_row() | win_marked_column() | win_marked_diagonale()
+		%p A(v) marked(v) | win_marked_row() | win_marked_column() | win_marked_diagonale()
 	}
 
 %action Game_Is_Not_Over() { 
-  %t "play" 
-  %p E(v) !marked(v) & !win_marked_row() & !win_marked_column() & !win_marked_diagonale()
+	%t "play" 
+	%p E(v) !marked(v) & !win_marked_row() & !win_marked_column() & !win_marked_diagonale()
 }
 %action Their_Turn() { 
 	//warte
-  %t "their turn"
-  %p E(v) !marked(v) -> 1/2 // alle Felder die nicht markiert sind bekommen 1/2
-  
+	%t "their turn"
+	//%p E(v) !marked(v) -> 1/2 // alle Felder die nicht markiert sind bekommen 1/2
+	//%p A(v) !marked(v) = 1/2
 }
-
+// %new als precondition
 %action My_Turn() { 
-  %t "my turn"
-  // alle if else
+	%t "my turn"
+	// alle if else
+	%p check_marked()
 }
