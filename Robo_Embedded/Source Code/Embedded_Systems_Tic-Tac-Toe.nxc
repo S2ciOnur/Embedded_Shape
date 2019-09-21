@@ -104,77 +104,6 @@ void move_pen(int x, int y){
 }
 
 /**
- * Lichtsensor
- */
-/*int light() {
-    Acquire(moveMutex_x);
-    Acquire(moveMutex_y);
-    Release(moveMutex_x);
-    Release(moveMutex_y);
-
-    int light,i=0,count=0,lines=0,temp=0,scan=0;
-
-    for(i=0;i<10;i++){
-        scan = Sensor(IN_1);
-    }
-
-    return scan;
-}*/
-
-/**
- * Zelle auf Symbol pruefen
- */
-/*void check_cell(int x, int y){
-    int scan1 = 0;
-    //int scan2 = 0;    //TODO wird nirgends benutzt
-
-    scan = false;
-
-    move_pen(x+45, y-130-1576);
-    Acquire(moveMutex_x);
-    Acquire(moveMutex_y);
-    Release(moveMutex_x);
-    Release(moveMutex_y);
-
-    scan1 = light();
-
-    scan = true;
-    if(scan1 < white - 2) {
-        found_symbol = true;
-    }
-}*/
-
-/**
- * Gegnerisches Symbol finden durch Lichtsensor
- */
-/*int find_symbol() {
-
-    SetSensorLight(IN_1);
-    int i=0, temp;
-
-    for(i=0; i<5; i++)
-        white = Sensor(IN_1);
-
-    i=0;
-
-    while(!found_symbol){
-        if(playfield[i]==0){
-            found_symbol = false;
-            check_cell(cell_x[i], cell_y[i]);
-            Wait(500);
-        }
-
-        i++;
-
-        if(i == 9 && !found_symbol)
-            i=0;
-
-    }
-
-    return i-1;
-}*/
-
-/**
  * Gegnerisches Symbol finden durch Lichtsensor
  */
 int find_symbol() {
@@ -182,8 +111,13 @@ int find_symbol() {
 	// der gescannte Untergrund
 	int scanned_ground = 0;
 
-	int light,i=0,count=0,lines=0,temp=0;
-	int i=0, temp;
+	int light;
+	int i=0;
+	int count=0;
+	int lines=0;
+	int temp=0;
+	int j=0;
+	//int temp;
 
 	// Sensor an und neutralen Untergrund merken
     SetSensorLight(IN_1);
@@ -210,7 +144,7 @@ int find_symbol() {
 			Release(moveMutex_x);
 			Release(moveMutex_y);
 
-			for(i=0;i<10;i++){
+			for(j=0;j<10;j++){
 				scanned_ground = Sensor(IN_1);
 			}
 
@@ -238,7 +172,8 @@ int find_symbol() {
  */
 void ultrasensor(){
 
-    int temp=0, i=0;
+    int temp=0;
+    int i=0;
     SetSensorLowspeed(IN_2);
     ClearScreen();
 
@@ -252,16 +187,15 @@ void ultrasensor(){
 
 }
 
-//TODO Ablauf klären der vier Tasks
+//TODO Ablauf kl?ren der vier Tasks
 
 /**
  * 'X' zeichnen --> Aufteilung in einzelne Tasks
  */
-/*task draw_x4() {
+task draw_x4() {
     RotateMotor(OUT_C,100,330); //y-axis
     pen_up(); //Stilos - OFF
     RotateMotor(OUT_C,100,-330); //y-axis
-    //current_y = current_y - 330;
 }
 
 task draw_x3() {
@@ -281,42 +215,20 @@ task draw_x1() {
     pen_down(); //Stilos - ON
     start draw_x2;
     RotateMotor(OUT_B,20,53); //x-axis
-}*/
-
-// TODO ein Task für 'X' zeichnen
-
-task draw_symbol(){
-
-    pen_down();
-    RotateMotor(OUT_C,100,330); //y-axis
-    pen_up();
-
-    RotateMotor(OUT_C,100,-330); //y-axis
-
-    pen_down();
-    RotateMotor(OUT_C,100,330); //y-axis
-    pen_up();
-
-    RotateMotor(OUT_C,100,-330); //y-axis
-    RotateMotor(OUT_B,20,-53); //x-axis
-    RotateMotor(OUT_B,20,53); //x-axis
-
 }
 
-// TODO Unterschied zu draw_x...()
+
 /**
  * 'X' in Zelle zeichnen
  */
-void draw_x_square(int x) {
+void mark_cell(int x) {
     move_pen(cell_x[x] + 20, cell_y[x] - 176);
     Acquire(moveMutex_x);
     Acquire(moveMutex_y);
     Release(moveMutex_x);
     Release(moveMutex_y);
 
-    //TODO to be removed
-    //start draw_x1;
-    start draw_symbol;
+    start draw_x1;
 
     Wait(6000);
 }
@@ -400,8 +312,11 @@ void draw_board() {
  *
  */
 int heuristic(int id){
-    int total = 0, i = 0, temp;
-    int cell[9], child[10];
+    int total = 0;
+    int i = 0;
+    int temp;
+    int cell[9];
+    int child[10];
 
     cell[0] = nodes[id].data0;
     cell[1] = nodes[id].data1;
@@ -425,7 +340,7 @@ int heuristic(int id){
        )
             total = total + 1000;
 
-	//Sieg des Gegners //TODO ist das nicht ueberfluessig
+	//Sieg des Gegners
     if( cell[0] == op_symbol && cell[1] == op_symbol && cell[2] == op_symbol ||
         cell[3] == op_symbol && cell[4] == op_symbol && cell[5] == op_symbol ||
         cell[6] == op_symbol && cell[7] == op_symbol && cell[8] == op_symbol ||
@@ -699,8 +614,6 @@ int best_move(){
 
     max=-1000;
 
-	if(best_cell == -1) {
-
         if(moves_left >= 3){
 
             //layer 4 max
@@ -817,8 +730,6 @@ int best_move(){
                 best_cell = i;
 
         }
-
-    }
 
     return best_cell;
 
@@ -976,24 +887,31 @@ int win_and_trick(){
  */
 task main(){
 
-    int i=0, j=0, k=0, p_data[9], temp_data[9], c_node=0, turns_num=9;
-    int child_num=0, child_total=0, tree_nodes=0, change_symbol=0, op_mark=0, turns=9;
+    int i=0;
+    int j=0;
+    int k=0;
+    int p_data[9];
+    int temp_data[9];
+    int c_node=0;
+    int turns_num=9;
+    int child_num=0;
+    int child_total=0;
+    int tree_nodes=0;
+    int change_symbol=0;
+    int op_mark=0;
+    int turns=9;
 
     // Feld zeichnen
     draw_board();
 
     // Robo faengt immer an
     ClearScreen();
-    TextOut(0,LCD_LINE1,"I play:");
-    NumOut(300,LCD_LINE1,symbol);
+    TextOut(0,LCD_LINE1,"Ich beginne");
     Wait(5000);
-
-    // TODO loeschen weil kurz danach auf 2 gesetzt
-    //change_symbol = 1;
 
     // Robo macht ersten Zug in Zelle 4 (Mitte)
     op_symbol = 2;
-    draw_x_square(4);
+    mark_cell(4);
     playfield[4] = 1;
 
     // simulieren des Abwechselns
@@ -1006,7 +924,7 @@ task main(){
     Release(moveMutex_x);
     Release(moveMutex_y);
 
-    //für jede Runde
+    //f?r jede Runde
     for(turns=0; turns<turns_num; turns++){
 
         if(win == false){
@@ -1179,7 +1097,7 @@ task main(){
                 }
 
                 //Symbol-Design
-                draw_x_square(best_cell);
+                mark_cell(best_cell);
 
                 move_pen(15,-3683);
                 Acquire(moveMutex_x);
@@ -1216,7 +1134,10 @@ task main(){
             }
         }
 
-        // TODO was heißt das
+
+        ClearScreen();
+
+        // TODO was hei?t das
         current_x = current_x + 1;
 
     }
@@ -1227,7 +1148,7 @@ task main(){
     Release(moveMutex_x);
     Release(moveMutex_y);
 
-    //Spielendstände => Unentschieden oder Sieg
+    //Spielendst?nde => Unentschieden oder Sieg
     if(win == false){
         ClearScreen();
         TextOut(0,LCD_LINE1,"Unentschieden");
@@ -1241,4 +1162,5 @@ task main(){
     move_pen(0,-3683);
 
 }
+
 
