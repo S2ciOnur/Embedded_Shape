@@ -1,2 +1,8 @@
+
 ..\..\bin\tvla.bat main.tvp playfield.tvs
-cmd /k
+if %errorlevel% EQU 0 (
+echo OK 
+) Else ( 
+Echo ERROR FAILED &color CF 
+)
+pause

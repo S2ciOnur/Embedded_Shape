@@ -18,5 +18,5 @@
 %action My_Turn() { 
 	%t "my turn"
 	// alle if else
-	%p check_marked()
+	%p M_X22_O11()
 }

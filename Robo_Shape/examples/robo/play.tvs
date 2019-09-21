@@ -21,7 +21,4 @@
 	marked_X = {f11,f22,f33}
 	marked = {f11,f22,f33}
 	
-	win_marked_diagonale = 1/2
-	win_marked_diagonale[r1,r2,r3,marked_X] = 1/2
-	
 }
