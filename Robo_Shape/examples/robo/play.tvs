@@ -18,10 +18,10 @@
 				f12 -> f22, f12 -> f32, f22 -> f32, f12 -> f12, f22 -> f22, f32 -> f32,
 				f13 -> f23, f13 -> f33, f23 -> f33, f13 -> f13, f23 -> f23, f33 -> f33
 			}
-	marked_X = {f11,f12,f13}
-	marked = {f11,f12,f13}
+	marked_X = {f11,f22,f33}
+	marked = {f11,f22,f33}
 	
-	win_marked_row = 1/2
-	win_marked_row[r1,marked_X] = 1/2
+	win_marked_diagonale = 1/2
+	win_marked_diagonale[r1,r2,r3,marked_X] = 1/2
 	
 }
