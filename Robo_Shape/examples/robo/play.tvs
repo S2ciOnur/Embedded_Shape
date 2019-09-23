@@ -19,20 +19,36 @@
 				f13 -> f23, f13 -> f33, f23 -> f33, f13 -> f13, f23 -> f23, f33 -> f33
 			}
 	 
-	/* row
+	// row
+	/*
 	marked_X = {f11,f12,f13}
 	marked = {f11,f12,f13}
+	
+	win_marked_row = 1/2
+	win_marked_row[r1,marked_X] = 1/2
 	*/
-	/* column
+	//column
+	/*
 	marked_X = {f11,f21,f31}
 	marked = {f11,f21,f31}
+	
+	win_marked_column = 1/2
+	win_marked_column[c1,marked_X] = 1/2
 	*/
-	/* diagonale links
+	// diagonale links
+	
 	marked_X = {f11,f22,f33}
 	marked = {f11,f22,f33}
-	*/
-	/* diagonale rechts
+	
+	win_marked_diagonale = 1/2
+	win_marked_diagonale[r1,r2,r3,marked_X] = 1/2
+	
+	// diagonale rechts
+	/*
 	marked_X = {f13,f22,f31}
 	marked = {f13,f22,f31}
+	
+	win_marked_diagonale = 1/2
+	win_marked_diagonale[r3,r2,r1,marked_X] = 1/2
 	*/
 }

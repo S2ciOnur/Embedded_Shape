@@ -27,8 +27,16 @@ foreach (z in HVar) {
 // The t[cn] predicate records transitive reflexive reachability between
 // list elements along the cn field.
 %i t[cn](v_1, v_2) = cn*(v_1, v_2) transitive reflexive
+//-------------------------------------------------------------------------------------------------
+// The is[rn] predicate holds for list elements pointed by two different
+// list elements.
+%i is[rn](v) = E(v_1, v_2) (v_1 != v_2 & rn(v_1, v) & rn(v_2, v))
+// is_f22[rn] (v) = E(v1,v2,v3) (v1 & rn(v, v1) & rn (v1,v2)) ????
 
-
+// The is[cn] predicate holds for list elements pointed by two different
+// list elements.
+%i is[cn](v) = E(v_1, v_2) (v_1 != v_2 & cn(v_1, v) & cn(v_2, v))
+//-------------------------------------------------------------------------------------------------
 %p marked_X(v) 
 %p marked_O(v)
 
@@ -84,8 +92,8 @@ foreach(x in marks) {
 	win_marked_diagonale[r1,r2,r3, marked_O]() | win_marked_diagonale[r3,r2,r1, marked_O]()	
 //------------------------------------------------------------------------------------------------
 // myTurn
-// marked fields
-%i marked_X_f11() = E(v1) r1(v1) & marked(v1) & marked_X(v1)
+
+// %i marked_X_f11() = E(v1) r1(v1) & marked(v1) & marked_X(v1)
 %i marked_O_f11() = E(v1) r1(v1) & marked(v1) & marked_O(v1)
 %i marked_X_f12() = E(v1,v2) r1(v1) & rn(v1,v2) & r1(v2) & marked(v2) & marked_X(v2)
 %i marked_O_f12() = E(v1,v2) r1(v1) & rn(v1,v2) & r1(v2) & marked(v2) & marked_O(v2)
@@ -107,7 +115,7 @@ foreach(x in marks) {
 //-----------------------------------------------------------------------------------------------------------
 // Spiellogik
 // nicht benutzt in turn 2
-%i M_X11_O12() = marked_X_f11() & marked_O_f12()
+/*%i M_X11_O12() = marked_X_f11() & marked_O_f12()
 %i M_X11_O13() = marked_X_f11() & marked_O_f13()
 %i M_X11_O21() = marked_X_f11() & marked_O_f21()
 %i M_X11_O23() = marked_X_f11() & marked_O_f23()
@@ -184,4 +192,4 @@ foreach(x in marks) {
 // Turn 4
 %i M_X22_O11_X33_O12 () = M_X22_O11() & M_X33_O12 ()
 // Turn 6
-// Turn 8
+// Turn 8*/
