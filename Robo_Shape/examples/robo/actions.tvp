@@ -18,4 +18,14 @@
 %action My_Turn() { 
 	%t "my turn"
 	// alle if else
+	%p marked_X(v) = marked_X(v) 
+	& ((M_X22_O11() & is_f31(v))
+	| (M_X22_O12() & is_f31(v))
+	| (M_X22_O13() & is_f31(v))
+	| (M_X22_O21() & is_f31(v))
+	| (M_X22_O23() & is_f31(v))
+	| (M_X22_O31() & is_f31(v))
+	| (M_X22_O32() & is_f31(v))
+	| (M_X22_O33() & is_f31(v))
+	)
 }

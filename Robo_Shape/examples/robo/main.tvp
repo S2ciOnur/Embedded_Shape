@@ -6,7 +6,7 @@
 %%
 
 
-Start Game_Is_Over()		exit 
+// Start Game_Is_Over()		exit 
 Start Game_Is_Not_Over()	L1 // while (!game_over) { 
 L1 Their_Turn()				L2	// their turn
 L2 My_Turn()				Start // my turn
