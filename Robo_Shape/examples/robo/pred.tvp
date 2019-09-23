@@ -64,8 +64,8 @@ foreach(x in marks) {
 	%i win_marked_diagonale[r1,r2,r3,x]() = 
 		E(v1,v2,v3,v4,v5,v6) 
 		r1(v1) & x(v1) &
-		r2(v2) & rn(v2,v3) & x(v3) &
-		r3(v4) & rn(v4,v5) & rn(v5,v6) & x(v6)
+		r2(v2) & rn(v2,v3) & r2(v3) & x(v3) &
+		r3(v4) & rn(v4,v5) & r3(v5) & rn(v5,v6) & r3(v6) & x(v6)
 }
 
 /* diagonale f13, f22, f31
@@ -74,9 +74,9 @@ x(f31) & f21-> f22 & x(f22) & f11 -> f12 ->f13 & x(f13)
 foreach(x in marks) {
 	%i win_marked_diagonale[r3,r2,r1,x]() = 
 		E(v1,v2,v3,v4,v5,v6) 
-		r3(v1) & x(v1) & 
-		r2(v2) & rn(v2,v3) & x(v3) & 
-		r1(v4) & rn(v4,v5) & rn(v5,v6) & x(v6)
+		r3(v1) & x(v1) &
+		r2(v2) & rn(v2,v3) & r2(v3) & x(v3) &
+		r1(v4) & rn(v4,v5) & r1(v5) & rn(v5,v6) & r1(v6) & x(v6)
 }
 
 %i win_marked_diagonale() = 
@@ -87,21 +87,23 @@ foreach(x in marks) {
 // marked fields
 %i marked_X_f11() = E(v1) r1(v1) & marked(v1) & marked_X(v1)
 %i marked_O_f11() = E(v1) r1(v1) & marked(v1) & marked_O(v1)
-%i marked_X_f12() = E(v1,v2) r1(v1) & rn(v1,v2) & r2(v2) & marked(v2) & marked_X(v2)
-%i marked_O_f12() = E(v1,v2) r1(v1) & rn(v1,v2) & r2(v2) & marked(v2) & marked_O(v2)
-%i marked_X_f13() = E(v1,v2,v3) r1(v1) & rn(v1,v2) & r2(v2) & rn(v2,v3) & marked(v3) & marked_X(v3)
-%i marked_O_f13() = E(v1,v2,v3) r1(v1) & rn(v1,v2) & r2(v2) & rn(v2,v3) & marked(v3) & marked_O(v3)
+%i marked_X_f12() = E(v1,v2) r1(v1) & rn(v1,v2) & r1(v2) & marked(v2) & marked_X(v2)
+%i marked_O_f12() = E(v1,v2) r1(v1) & rn(v1,v2) & r1(v2) & marked(v2) & marked_O(v2)
+%i marked_X_f13() = E(v1,v2,v3) r1(v1) & rn(v1,v2) & r1(v2) & rn(v2,v3) & r1(v3) & marked(v3) & marked_X(v3)
+%i marked_O_f13() = E(v1,v2,v3) r1(v1) & rn(v1,v2) & r1(v2) & rn(v2,v3) & r1(v3) & marked(v3) & marked_O(v3)
+
 %i marked_X_f21() = E(v1) r2(v1) & marked(v1) & marked_X(v1)
 %i marked_O_f21() = E(v1) r2(v1) & marked(v1) & marked_O(v1)
 %i marked_X_f22() = E(v1,v2) r2(v1) & rn(v1,v2) & r2(v2) & marked(v2) & marked_X(v2)
-%i marked_X_f23() = E(v1,v2,v3) r2(v1) & rn(v1,v2) & r2(v2) & rn(v2,v3) & marked(v3) & marked_X(v3)
-%i marked_O_f23() = E(v1,v2,v3) r2(v1) & rn(v1,v2) & r2(v2) & rn(v2,v3) & marked(v3) & marked_O(v3)
+%i marked_X_f23() = E(v1,v2,v3) r2(v1) & rn(v1,v2) & r2(v2) & rn(v2,v3) & r2(v3) & marked(v3) & marked_X(v3)
+%i marked_O_f23() = E(v1,v2,v3) r2(v1) & rn(v1,v2) & r2(v2) & rn(v2,v3) & r2(v3) & marked(v3) & marked_O(v3)
+
 %i marked_X_f31() = E(v1) r3(v1) & marked(v1) & marked_X(v1)
 %i marked_O_f31() = E(v1) r3(v1) & marked(v1) & marked_O(v1)
-%i marked_X_f32() = E(v1,v2) r3(v1) & rn(v1,v2) & r2(v2) & marked(v2) & marked_X(v2)
-%i marked_O_f32() = E(v1,v2) r3(v1) & rn(v1,v2) & r2(v2) & marked(v2) & marked_O(v2)
-%i marked_X_f33() = E(v1,v2,v3) r3(v1) & rn(v1,v2) & r2(v2) & rn(v2,v3) & marked(v3) & marked_X(v3)
-%i marked_O_f33() = E(v1,v2,v3) r3(v1) & rn(v1,v2) & r2(v2) & rn(v2,v3) & marked(v3) & marked_O(v3)
+%i marked_X_f32() = E(v1,v2) r3(v1) & rn(v1,v2) & r3(v2) & marked(v2) & marked_X(v2)
+%i marked_O_f32() = E(v1,v2) r3(v1) & rn(v1,v2) & r3(v2) & marked(v2) & marked_O(v2)
+%i marked_X_f33() = E(v1,v2,v3) r3(v1) & rn(v1,v2) & r3(v2) & rn(v2,v3) & r3(v3) & marked(v3) & marked_X(v3)
+%i marked_O_f33() = E(v1,v2,v3) r3(v1) & rn(v1,v2) & r3(v2) & rn(v2,v3) & r3(v3) & marked(v3) & marked_O(v3)
 //-----------------------------------------------------------------------------------------------------------
 // Spiellogik
 // nicht benutzt in turn 2
@@ -180,5 +182,6 @@ foreach(x in marks) {
 %i M_X22_O33() = marked_X_f22() & marked_O_f33()
 
 // Turn 4
+%i M_X22_O11_X33_O12 () = M_X22_O11() & M_X33_O12 ()
 // Turn 6
 // Turn 8
