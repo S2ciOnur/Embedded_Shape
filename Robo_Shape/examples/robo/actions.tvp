@@ -3,7 +3,6 @@
 	// Alle Felder markiert v alle Reihen markiert v alle Zeilen markiert oder Diagonale
 		%p A(v) marked(v) | win_marked_row() | win_marked_column() | win_marked_diagonale()
 	}
-
 %action Game_Is_Not_Over() { 
 	%t "play" 
 	%p E(v) !marked(v) & !win_marked_row() & !win_marked_column() & !win_marked_diagonale()
@@ -11,21 +10,30 @@
 %action Their_Turn() { 
 	//warte
 	%t "their turn"
-	//%p E(v) !marked(v) -> 1/2 // alle Felder die nicht markiert sind bekommen 1/2
-	//%p A(v) !marked(v) = 1/2
+	{
+		marked_O(v) = marked_O(v) 
+	// 	| r1(v) 									// markiere f11
+	// 	| (E(v1,v2) r1(v1) & rn(v1,v)) 				// markiere f12
+	// 	| (E(v1,v2) r1(v1) & rn(v1,v2) & rn(v2,v)) 	// markiere f13
+	// 	| r2(v) 									// markiere f21
+	// 	| (E(v1,v2) r2(v1) & rn(v1,v2) & rn(v2,v)) 	// markiere f23
+	// 	| r3(v) 									// markiere f31
+	// 	| (E(v1,v2) r3(v1) & rn(v1,v)) 				// markiere f32
+	 	| (E(v1,v2) r3(v1) & rn(v1,v2) & rn(v2,v)) 	// markiere f33
+	}
 }
-// %new als precondition
+
 %action My_Turn() { 
 	%t "my turn"
-	// alle if else
-	%p marked_X(v) = marked_X(v) 
-	& ((M_X22_O11() & is_f31(v))
-	| (M_X22_O12() & is_f31(v))
-	| (M_X22_O13() & is_f31(v))
-	| (M_X22_O21() & is_f31(v))
-	| (M_X22_O23() & is_f31(v))
-	| (M_X22_O31() & is_f31(v))
-	| (M_X22_O32() & is_f31(v))
-	| (M_X22_O33() & is_f31(v))
-	)
+	{ 
+		marked_X(v) = marked_X(v) 
+		| (M_X22_O11() & (E(v1,v2) r2(v1) & rn(v1,v2) & rn(v2,v))) 	// f23
+		| (M_X22_O12() & r3(v)) 									// f31
+		| (M_X22_O13() & (E(v1,v2) r3(v1) & rn(v1,v2) & rn(v2,v))) 	// f33
+		| (M_X22_O21() & (E(v1,v2) r1(v1) & rn(v1,v2) & rn(v2,v))) 	// f13
+		| (M_X22_O23() & r1(v)) 									// f11
+		| (M_X22_O31() & (E(v1,v2) r3(v1) & rn(v1,v2) & rn(v2,v))) 	// f33
+		| (M_X22_O32() & r1(v))										// f11
+		| (M_X22_O33() & (E(v1,v2) r1(v1) & rn(v1,v)))				// f12
+	}
 }
