@@ -46,8 +46,25 @@ mutex moveMutex_x, moveMutex_y;
 struct node {
     int id;
     int parent;
-    int child0,child1,child2,child3,child4,child5,child6,child7,child8,child9;
-    int data0,data1,data2,data3,data4,data5,data6,data7,data8;
+    int child0;
+	int child1;
+	int child2;
+	int child3; 
+	int child4; 
+	int child5;
+	int child6; 
+	int child7; 
+	int child8; 
+	int child9;
+    int data0; 
+	int data1; 
+	int data2; 
+	int data3; 
+	int data4; 
+	int data5; 
+	int data6; 
+	int data7; 
+	int data8;
     int layer;
     int symbol;
     int value;
@@ -117,7 +134,6 @@ int find_symbol() {
 	int lines=0;
 	int temp=0;
 	int j=0;
-	//int temp;
 
 	// Sensor an und neutralen Untergrund merken
     SetSensorLight(IN_1);
@@ -130,8 +146,6 @@ int find_symbol() {
 
 		if(playfield[i]==0){
             found_symbol = false;
-
-			//scan = false;		//TODO kann weg, da immer nur geswitcht wird
 
 			// durch Zellen navigieren
 			move_pen(cell_x[i]+45, cell_y[i]-130-1576);
@@ -148,13 +162,10 @@ int find_symbol() {
 				scanned_ground = Sensor(IN_1);
 			}
 
-			//scan = true;		//TODO kann weg, da immer nur geswitcht wird
-
 			// falls Unterschied bemerkbar => gefunden
 			if(scanned_ground < white - 2) {
 				found_symbol = true;
 			}
-
             Wait(500);
         }
 
@@ -187,7 +198,7 @@ void ultrasensor(){
 
 }
 
-//TODO Ablauf kl?ren der vier Tasks
+//TODO Ablauf klaeren der vier Tasks
 
 /**
  * 'X' zeichnen --> Aufteilung in einzelne Tasks
@@ -736,7 +747,7 @@ int best_move(){
 }
 
 /*
- * Sieg und ... //TODO was bedeutet trick
+ * Sieg und letzter Zug
  */
 int win_and_trick(){
     best_cell = -1;
@@ -924,11 +935,11 @@ task main(){
     Release(moveMutex_x);
     Release(moveMutex_y);
 
-    //f?r jede Runde
+    //fuer jede Runde
     for(turns=0; turns<turns_num; turns++){
 
         if(win == false){
-            // TODO fuer was sind die layer gut?
+            // layer = Baum tiefe
             layer_4_nodes = 0;
             layer_3_nodes = 0;
             layer_2_nodes = 0;
@@ -1137,7 +1148,7 @@ task main(){
 
         ClearScreen();
 
-        // TODO was hei?t das
+        // TODO was heiszt das
         current_x = current_x + 1;
 
     }
@@ -1148,7 +1159,7 @@ task main(){
     Release(moveMutex_x);
     Release(moveMutex_y);
 
-    //Spielendst?nde => Unentschieden oder Sieg
+    //Spielendstaende => Unentschieden oder Sieg
     if(win == false){
         ClearScreen();
         TextOut(0,LCD_LINE1,"Unentschieden");
