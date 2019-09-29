@@ -6,6 +6,8 @@ int cell_y[] = {2049,2049,2049,1366,1366,1366,683,683,683};
 
 //Initiales Spielfeld
 int playfield[] = {0,0,0,0,0,0,0,0,0};
+int playfieldTwoDim[3][3] = {{0}};
+
 
 int current_x=0;
 int current_y=-3683;
@@ -32,19 +34,17 @@ bool win=false;
 
 mutex moveMutex_x, moveMutex_y;
 
-int[][] oneDimPlayfieldToTwoDim(int playfield[]){
-    int playfieldNew[3][3] = {{0}};
-    playfieldNew[1][1] = playfield[1];
-    playfieldNew[1][2] = playfield[2];
-    playfieldNew[1][3] = playfield[3];
-    playfieldNew[2][1] = playfield[4];
-    playfieldNew[2][2] = playfield[5];
-    playfieldNew[2][3] = playfield[6];
-    playfieldNew[3][1] = playfield[7];
-    playfieldNew[3][2] = playfield[8];
-    playfieldNew[3][3] = playfield[9];
-	
-	return playfieldNew;
+void oneDimPlayfieldToTwoDim(){
+
+    playfieldTwoDim[1][1] = playfield[1];
+    playfieldTwoDim[1][2] = playfield[2];
+    playfieldTwoDim[1][3] = playfield[3];
+    playfieldTwoDim[2][1] = playfield[4];
+    playfieldTwoDim[2][2] = playfield[5];
+    playfieldTwoDim[2][3] = playfield[6];
+    playfieldTwoDim[3][1] = playfield[7];
+    playfieldTwoDim[3][2] = playfield[8];
+    playfieldTwoDim[3][3] = playfield[9];
 }
 
 /**
@@ -383,16 +383,16 @@ bool isMovesLeft()
 
 int evaluate()
 {
-    int playfield[3][3] = oneDimPlayfieldToTwoDim(playfield);
+    oneDimPlayfieldToTwoDim();
     // Checking for Rows for X or O victory.
     for (int row = 0; row<3; row++)
     {
-        if (playfield[row][0]==playfield[row][1] &&
-            playfield[row][1]==playfield[row][2])
+        if (playfieldTwoDim[row][0]==playfieldTwoDim[row][1] &&
+            playfieldTwoDim[row][1]==playfieldTwoDim[row][2])
         {
-            if (playfield[row][0]==symbol)
+            if (playfieldTwoDim[row][0]==symbol)
                 return +10;
-            else if (playfield[row][0]==op_symbol)
+            else if (playfieldTwoDim[row][0]==op_symbol)
                 return -10;
         }
     }
@@ -400,31 +400,31 @@ int evaluate()
     // Checking for Columns for X or O victory.
     for (int col = 0; col<3; col++)
     {
-        if (playfield[0][col]==playfield[1][col] &&
-            playfield[1][col]==playfield[2][col])
+        if (playfieldTwoDim[0][col]==playfieldTwoDim[1][col] &&
+            playfieldTwoDim[1][col]==playfieldTwoDim[2][col])
         {
-            if (playfield[0][col]==symbol)
+            if (playfieldTwoDim[0][col]==symbol)
                 return +10;
 
-            else if (playfield[0][col]==op_symbol)
+            else if (playfieldTwoDim[0][col]==op_symbol)
                 return -10;
         }
     }
 
     // Checking for Diagonals for X or O victory.
-    if (playfield[0][0]==playfield[1][1] && playfield[1][1]==playfield[2][2])
+    if (playfieldTwoDim[0][0]==playfieldTwoDim[1][1] && playfieldTwoDim[1][1]==playfieldTwoDim[2][2])
     {
-        if (playfield[0][0]==symbol)
+        if (playfieldTwoDim[0][0]==symbol)
             return +10;
-        else if (playfield[0][0]==op_symbol)
+        else if (playfieldTwoDim[0][0]==op_symbol)
             return -10;
     }
 
-    if (playfield[0][2]==playfield[1][1] && playfield[1][1]==playfield[2][0])
+    if (playfieldTwoDim[0][2]==playfieldTwoDim[1][1] && playfieldTwoDim[1][1]==playfieldTwoDim[2][0])
     {
-        if (playfield[0][2]==symbol)
+        if (playfieldTwoDim[0][2]==symbol)
             return +10;
-        else if (playfield[0][2]==op_symbol)
+        else if (playfieldTwoDim[0][2]==op_symbol)
             return -10;
     }
 
