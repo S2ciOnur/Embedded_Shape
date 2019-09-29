@@ -349,19 +349,14 @@ task main(){
     Release(moveMutex_y);
 
     //fuer jede Runde
-    for(turns=0; turns<turns_num; turns++){
-
-        if(win == false){
-            // layer = Baum tiefe
-            //layer_4_nodes = 0;
-            //layer_3_nodes = 0;
-            //layer_2_nodes = 0;
-            //child_total=0;
-
-            // zu Beginn trat noch kein Spielstand ein, daher auf 0 gesetzt
-            for(i=0;i<401;i++){
-            //    nodes[i].active = 0;
-            }
+    for(turns=0; turns<turns_num; turns++)
+    {
+      int gegnerischesSymbol = find_symbol();
+      playfield[gegnerischesSymbol] = op_symbol;
+      int naechsterZug = minimax3(turns, true);
+      mark_cell(naechsterZug);
+      playfield[naechsterZug] = symbol;
+    }
 
 
             move_pen(15,-3683);
@@ -386,6 +381,7 @@ task main(){
         }
     }
 }
+
 struct Move
 {
     int row;
@@ -914,163 +910,6 @@ int minimax3(int depth, bool isMax)
                     // the minimum value
                     best = min(best,
                            minimax4(depth+1, !isMax));
-
-                    // Undo the move
-                    playfieldTwoDim[i][j] = 0;
-                }
-            }
-        }
-        return best;
-    }
-}
-
-
-int minimax2(int depth, bool isMax)
-{
-    oneDimPlayfieldToTwoDim();
-    int score = evaluate();
-
-    // If Maximizer has won the game return his/her
-    // evaluated score
-    if (score == 10)
-        return score;
-
-    // If Minimizer has won the game return his/her
-    // evaluated score
-    if (score == -10)
-        return score;
-
-    // If there are no more moves and no winner then
-    // it is a tie
-    if (isMovesLeft()==false)
-        return 0;
-
-    // If this maximizer's move
-    if (isMax)
-    {
-        int best = -1000;
-
-        // Traverse all cells
-        for (int i = 0; i<3; i++)
-        {
-            for (int j = 0; j<3; j++)
-            {
-                // Check if cell is empty
-                if (playfieldTwoDim[i][j]== 0)
-                {
-                    // Make the move
-                    playfieldTwoDim[i][j] = symbol;
-
-                    // Call minimax recursively and choose
-                    // the maximum value
-                    best = max( best, minimax3(depth+1, !isMax) );
-
-                    // Undo the move
-                    playfieldTwoDim[i][j] = 0;
-                }
-            }
-        }
-        return best;
-    }
-
-    // If this minimizer's move
-    else
-    {
-        int best = 1000;
-
-        // Traverse all cells
-        for (int i = 0; i<3; i++)
-        {
-            for (int j = 0; j<3; j++)
-            {
-                // Check if cell is empty
-                if (playfieldTwoDim[i][j]== 0)
-                {
-                    // Make the move
-                    playfieldTwoDim[i][j] = op_symbol;
-
-                    // Call minimax recursively and choose
-                    // the minimum value
-                    best = min(best,
-                           minimax3(depth+1, !isMax));
-
-                    // Undo the move
-                    playfieldTwoDim[i][j] = 0;
-                }
-            }
-        }
-        return best;
-    }
-}
-
-
-int minimax(int depth, bool isMax)
-{
-    oneDimPlayfieldToTwoDim();
-    int score = evaluate();
-
-    // If Maximizer has won the game return his/her
-    // evaluated score
-    if (score == 10)
-        return score;
-
-    // If Minimizer has won the game return his/her
-    // evaluated score
-    if (score == -10)
-        return score;
-
-    // If there are no more moves and no winner then
-    // it is a tie
-    if (isMovesLeft()==false)
-        return 0;
-
-    // If this maximizer's move
-    if (isMax)
-    {
-        int best = -1000;
-
-        // Traverse all cells
-        for (int i = 0; i<3; i++)
-        {
-            for (int j = 0; j<3; j++)
-            {
-                // Check if cell is empty
-                if (playfieldTwoDim[i][j]== 0)
-                {
-                    // Make the move
-                    playfieldTwoDim[i][j] = symbol;
-
-                    // Call minimax recursively and choose
-                    // the maximum value
-                    best = max( best, minimax2(depth+1, !isMax) );
-
-                    // Undo the move
-                    playfieldTwoDim[i][j] = 0;
-                }
-            }
-        }
-        return best;
-    }
-
-    // If this minimizer's move
-    else
-    {
-        int best = 1000;
-
-        // Traverse all cells
-        for (int i = 0; i<3; i++)
-        {
-            for (int j = 0; j<3; j++)
-            {
-                // Check if cell is empty
-                if (playfieldTwoDim[i][j]== 0)
-                {
-                    // Make the move
-                    playfieldTwoDim[i][j] = op_symbol;
-
-                    // Call minimax recursively and choose
-                    // the minimum value
-                    best = min(best,minimax2(depth+1, !isMax));
 
                     // Undo the move
                     playfieldTwoDim[i][j] = 0;
