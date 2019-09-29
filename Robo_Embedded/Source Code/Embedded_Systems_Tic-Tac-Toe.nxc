@@ -20,14 +20,6 @@ int trick=1;
 int max=0;
 int min=0;
 int move=0;
-int layer_1=0;
-int layer_2[10];
-int layer_3[73];
-int layer_2_tree[10];
-int layer_1_nodes=0;
-int layer_2_nodes=0;
-int layer_3_nodes=0;
-int layer_4_nodes=0;
 int best_cell=0;
 int moves_left=0;
 int lcd=0;
@@ -42,38 +34,6 @@ bool win=false;
 
 mutex moveMutex_x, moveMutex_y;
 
-//Knotenstruktur des Baums
-struct node {
-    int id;
-    int parent;
-    int child0;
-	int child1;
-	int child2;
-	int child3;
-	int child4;
-	int child5;
-	int child6;
-	int child7;
-	int child8;
-	int child9;
-    int data0;
-	int data1;
-	int data2;
-	int data3;
-	int data4;
-	int data5;
-	int data6;
-	int data7;
-	int data8;
-    int layer;
-    int symbol;
-    int value;
-    int node_value;
-    int active;
-};
-
-//maximale Knotenanzahl = 401   //TODO wie wurde das berechnet
-node nodes[401];
 
 /**
  * Stift absetzen
