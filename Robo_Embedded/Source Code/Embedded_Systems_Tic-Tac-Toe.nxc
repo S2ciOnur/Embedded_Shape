@@ -21,10 +21,8 @@ int max=0;
 int min=0;
 int move=0;
 int best_cell=0;
-int moves_left=0;
 int lcd=0;
 int id=0;
-int child=0;
 int move_x;
 int move_y;
 
@@ -289,7 +287,6 @@ task main(){
     int turns_num=9;
     int child_num=0;
     int child_total=0;
-    int tree_nodes=0;
     int change_symbol=0;
     int op_mark=0;
     int turns=9;
@@ -322,14 +319,14 @@ task main(){
 
         if(win == false){
             // layer = Baum tiefe
-            layer_4_nodes = 0;
-            layer_3_nodes = 0;
-            layer_2_nodes = 0;
-            child_total=0;
+            //layer_4_nodes = 0;
+            //layer_3_nodes = 0;
+            //layer_2_nodes = 0;
+            //child_total=0;
 
             // zu Beginn trat noch kein Spielstand ein, daher auf 0 gesetzt
             for(i=0;i<401;i++){
-                nodes[i].active = 0;
+            //    nodes[i].active = 0;
             }
 
 
@@ -354,4 +351,69 @@ task main(){
 
         }
     }
+}
+struct Move
+{
+    int row;
+    int col;
+};
+
+bool isMovesLeft()
+{
+    for (int i = 0; i<3; i++)
+        for (int j = 0; j<3; j++)
+            if (playfield[i]==0)
+                return true;
+    return false;
+}
+
+int evaluate()
+{
+    int playfield[3][3] = oneDimPlayfieldToTwoDim(playfield);
+    // Checking for Rows for X or O victory.
+    for (int row = 0; row<3; row++)
+    {
+        if (playfield[row][0]==playfield[row][1] &&
+            playfield[row][1]==playfield[row][2])
+        {
+            if (playfield[row][0]==symbol)
+                return +10;
+            else if (playfield[row][0]==op_symbol)
+                return -10;
+        }
+    }
+
+    // Checking for Columns for X or O victory.
+    for (int col = 0; col<3; col++)
+    {
+        if (playfield[0][col]==playfield[1][col] &&
+            playfield[1][col]==playfield[2][col])
+        {
+            if (playfield[0][col]==symbol)
+                return +10;
+
+            else if (playfield[0][col]==op_symbol)
+                return -10;
+        }
+    }
+
+    // Checking for Diagonals for X or O victory.
+    if (playfield[0][0]==playfield[1][1] && playfield[1][1]==playfield[2][2])
+    {
+        if (playfield[0][0]==symbol)
+            return +10;
+        else if (playfield[0][0]==op_symbol)
+            return -10;
+    }
+
+    if (playfield[0][2]==playfield[1][1] && playfield[1][1]==playfield[2][0])
+    {
+        if (playfield[0][2]==symbol)
+            return +10;
+        else if (playfield[0][2]==op_symbol)
+            return -10;
+    }
+
+    // Else if none of them have won then return 0
+    return 0;
 }
