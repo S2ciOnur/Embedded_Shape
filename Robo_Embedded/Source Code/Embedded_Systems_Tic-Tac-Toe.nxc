@@ -885,12 +885,47 @@ task main(){
     Release(moveMutex_x);
     Release(moveMutex_y);
 
+    ultrasensor();
     //fuer jede Runde
-    for(turns=0; turns<turns_num; turns++)
+    for(turns=3; turns<turns_num; turns++)
     {
+      int naechsterZug = 0;
       int gegnerischesSymbol = find_symbol();
       playfield[gegnerischesSymbol] = op_symbol;
-      int naechsterZug = minimax3(turns, true);
+
+      if(turns == 3)
+      {
+         ClearScreen();
+         TextOut(0,LCD_LINE1,"Beginn minimax3");
+         naechsterZug = minimax3(turns, true);
+         ClearScreen();
+         TextOut(0,LCD_LINE1,"Ende minimax3");
+      }
+      if(turns == 4)
+      {
+        naechsterZug = minimax4(turns, true);
+      }
+
+      if(turns == 5)
+      {
+        naechsterZug = minimax5(turns, true);
+      }
+
+      if(turns == 6)
+      {
+         naechsterZug = minimax6(turns, true);
+      }
+
+      if(turns == 7)
+      {
+         naechsterZug = minimax7(turns, true);
+      }
+
+      if(turns == 7)
+      {
+         naechsterZug = minimax8(turns, true);
+      }
+
       mark_cell(naechsterZug);
       playfield[naechsterZug] = symbol;
     }
@@ -914,8 +949,6 @@ task main(){
 
             Wait(10000);
             move_pen(0,-3683);
-
-        }
     }
 }
 
