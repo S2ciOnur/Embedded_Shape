@@ -307,81 +307,6 @@ void draw_board() {
     Release(moveMutex_y);
 }
 
-/*
- * Main-Task
- */
-task main(){
-
-    int i=0;
-    int j=0;
-    int k=0;
-    int p_data[9];
-    int temp_data[9];
-    int c_node=0;
-    int turns_num=9;
-    int child_num=0;
-    int child_total=0;
-    int change_symbol=0;
-    int op_mark=0;
-    int turns=9;
-
-    // Feld zeichnen
-    draw_board();
-
-    // Robo faengt immer an
-    ClearScreen();
-    TextOut(0,LCD_LINE1,"Ich beginne");
-    Wait(5000);
-
-    // Robo macht ersten Zug in Zelle 4 (Mitte)
-    op_symbol = 2;
-    mark_cell(4);
-    playfield[4] = 1;
-
-    // simulieren des Abwechselns
-    change_symbol = 2;
-
-    turns_num--;
-    move_pen(0,-3683);
-    Acquire(moveMutex_x);
-    Acquire(moveMutex_y);
-    Release(moveMutex_x);
-    Release(moveMutex_y);
-
-    //fuer jede Runde
-    for(turns=0; turns<turns_num; turns++)
-    {
-      int gegnerischesSymbol = find_symbol();
-      playfield[gegnerischesSymbol] = op_symbol;
-      int naechsterZug = minimax3(turns, true);
-      mark_cell(naechsterZug);
-      playfield[naechsterZug] = symbol;
-    }
-
-
-            move_pen(15,-3683);
-            Acquire(moveMutex_x);
-            Acquire(moveMutex_y);
-            Release(moveMutex_x);
-            Release(moveMutex_y);
-
-            //Spielendstaende => Unentschieden oder Sieg
-            if(win == false){
-                ClearScreen();
-                TextOut(0,LCD_LINE1,"Unentschieden");
-            }
-            else{
-                ClearScreen();
-                TextOut(0,LCD_LINE1,"Sieg");
-            }
-
-            Wait(10000);
-            move_pen(0,-3683);
-
-        }
-    }
-}
-
 struct Move
 {
     int row;
@@ -448,7 +373,6 @@ int evaluate()
     // Else if none of them have won then return 0
     return 0;
 }
-
 
 int minimax8(int depth, bool isMax)
 {
@@ -919,3 +843,80 @@ int minimax3(int depth, bool isMax)
         return best;
     }
 }
+
+/*
+ * Main-Task
+ */
+task main(){
+
+    int i=0;
+    int j=0;
+    int k=0;
+    int p_data[9];
+    int temp_data[9];
+    int c_node=0;
+    int turns_num=9;
+    int child_num=0;
+    int child_total=0;
+    int change_symbol=0;
+    int op_mark=0;
+    int turns=9;
+
+    // Feld zeichnen
+    draw_board();
+
+    // Robo faengt immer an
+    ClearScreen();
+    TextOut(0,LCD_LINE1,"Ich beginne");
+    Wait(5000);
+
+    // Robo macht ersten Zug in Zelle 4 (Mitte)
+    op_symbol = 2;
+    mark_cell(4);
+    playfield[4] = 1;
+
+    // simulieren des Abwechselns
+    change_symbol = 2;
+
+    turns_num--;
+    move_pen(0,-3683);
+    Acquire(moveMutex_x);
+    Acquire(moveMutex_y);
+    Release(moveMutex_x);
+    Release(moveMutex_y);
+
+    //fuer jede Runde
+    for(turns=0; turns<turns_num; turns++)
+    {
+      int gegnerischesSymbol = find_symbol();
+      playfield[gegnerischesSymbol] = op_symbol;
+      int naechsterZug = minimax3(turns, true);
+      mark_cell(naechsterZug);
+      playfield[naechsterZug] = symbol;
+    }
+
+
+            move_pen(15,-3683);
+            Acquire(moveMutex_x);
+            Acquire(moveMutex_y);
+            Release(moveMutex_x);
+            Release(moveMutex_y);
+
+            //Spielendstaende => Unentschieden oder Sieg
+            if(win == false){
+                ClearScreen();
+                TextOut(0,LCD_LINE1,"Unentschieden");
+            }
+            else{
+                ClearScreen();
+                TextOut(0,LCD_LINE1,"Sieg");
+            }
+
+            Wait(10000);
+            move_pen(0,-3683);
+
+        }
+    }
+}
+
+
