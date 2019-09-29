@@ -725,7 +725,7 @@ int minimax4(int depth, bool isMax)
 
                     // Call minimax recursively and choose
                     // the maximum value
-                    best = max( best, minimax5(depth+1, !isMax) );
+                   best = max( best, minimax5(depth+1, !isMax) );
 
                     // Undo the move
                     playfieldTwoDim[i][j] = 0;
@@ -753,8 +753,7 @@ int minimax4(int depth, bool isMax)
 
                     // Call minimax recursively and choose
                     // the minimum value
-                    best = min(best,
-                           minimax5(depth+1, !isMax));
+                    best = min(best, minimax5(depth+1, !isMax));
 
                     // Undo the move
                     playfieldTwoDim[i][j] = 0;
